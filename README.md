@@ -9,9 +9,9 @@
 docker-compose -f docker-compose.yml up -d --build
 ```
 ## Примеры работы с сервисом
-(Тестовые примеры, чтобы проверить, живой ли сервер)
+(Тестовый примеры, чтобы проверить, живой ли сервер)
 
-Отправка POST запроса на :
+Отправка POST запроса :
 ```bash
 curl --request POST \
 127.0.0.1:5001/api/v1/geomSolver/point/equal/
