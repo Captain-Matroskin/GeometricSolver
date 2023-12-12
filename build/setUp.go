@@ -55,14 +55,14 @@ func InitConfig() (error, []interface{}) {
 	errRead := viper.ReadInConfig()
 	if errRead != nil {
 		return &errPkg.MyErrors{
-			Text: errRead.Error(),
+			ProjectTypeText: errRead.Error(),
 		}, nil
 	}
 	mainConfig := config.MainConfig{}
 	errUnmarshal := viper.Unmarshal(&mainConfig)
 	if errUnmarshal != nil {
 		return &errPkg.MyErrors{
-			Text: errUnmarshal.Error(),
+			ProjectTypeText: errUnmarshal.Error(),
 		}, nil
 	}
 

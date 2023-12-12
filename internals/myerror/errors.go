@@ -9,11 +9,13 @@ type MultiLoggerInterface interface {
 }
 
 type MyErrors struct {
-	Text string
+	SourceText      string
+	ProjectTypeText string
+	Way             string
 }
 
 func (e *MyErrors) Error() string {
-	return e.Text
+	return e.ProjectTypeText
 }
 
 type ResultError struct {

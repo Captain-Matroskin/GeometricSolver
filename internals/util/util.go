@@ -18,7 +18,7 @@ func InterfaceConvertInt(value interface{}) (int, error) {
 		intConvert, errorConvert = strconv.Atoi(value.(string))
 		if errorConvert != nil {
 			return errPkg.IntNil, &errPkg.MyErrors{
-				Text: errPkg.ErrAtoi,
+				ProjectTypeText: errPkg.ErrAtoi,
 			}
 		}
 		return intConvert, nil
@@ -27,7 +27,7 @@ func InterfaceConvertInt(value interface{}) (int, error) {
 		return intConvert, nil
 	default:
 		return errPkg.IntNil, &errPkg.MyErrors{
-			Text: errPkg.ErrNotStringAndInt,
+			ProjectTypeText: errPkg.ErrNotStringAndInt,
 		}
 	}
 }
