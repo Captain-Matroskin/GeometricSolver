@@ -34,6 +34,8 @@ func (p *PointApi) EqualTwoPointsHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		p.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
+
+	ctx.Response.SetBody([]byte("{\"text\": \"It's not working yet\"}"))
 	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
