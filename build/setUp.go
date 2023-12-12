@@ -2,10 +2,12 @@ package build
 
 import (
 	"geometricSolver/config"
-	apiGS "geometricSolver/internals/geomSolver/api"
-	"geometricSolver/internals/geomSolver/application"
+	apiLine "geometricSolver/internals/line/api"
+	appLine "geometricSolver/internals/line/application"
 	apiMiddle "geometricSolver/internals/middleware/api"
 	errPkg "geometricSolver/internals/myerror"
+	apiPoint "geometricSolver/internals/point/api"
+	appPoint "geometricSolver/internals/point/application"
 	"github.com/spf13/viper"
 )
 
@@ -16,22 +18,29 @@ const (
 )
 
 type InstallSetUp struct {
-	GeomSolver apiGS.GeomSolverApi
-	Middle     apiMiddle.MiddlewareApi
+	Point  apiPoint.PointApi
+	Line   apiLine.LineApi
+	Middle apiMiddle.MiddlewareApi
 }
 
 // инициализация всех структур для обработчиков
 func SetUp(logger errPkg.MultiLoggerInterface) *InstallSetUp {
-	geomSolverApp := application.GeomSolverApp{}
-	checkErrorApiGS := errPkg.CheckError{Logger: logger}
-	geomSolverApi := apiGS.GeomSolverApi{Application: geomSolverApp, CheckErrors: checkErrorApiGS, Logger: logger}
-	var _ apiGS.GeomSolverApiInterface = &geomSolverApi
+	pointApp := appPoint.PointApp{}
+	checkErrorApiPoint := errPkg.CheckError{Logger: logger}
+	pointApi := apiPoint.PointApi{Application: &pointApp, CheckErrors: &checkErrorApiPoint, Logger: logger}
+	var _ apiPoint.PointApiInterface = &pointApi
+
+	lineApp := appLine.LineApp{}
+	checkErrorApiLine := errPkg.CheckError{Logger: logger}
+	lineApi := apiLine.LineApi{Application: &lineApp, CheckErrors: &checkErrorApiLine, Logger: logger}
+	var _ apiLine.LineApiInterface = &lineApi
 
 	middleApi := apiMiddle.MiddlewareApi{Logger: logger}
 	var _ apiMiddle.MiddlewareApiInterface = &middleApi
 
 	var result InstallSetUp
-	result.GeomSolver = geomSolverApi
+	result.Point = pointApi
+	result.Line = lineApi
 	result.Middle = middleApi
 
 	return &result

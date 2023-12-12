@@ -32,4 +32,5 @@ const (
 	ErrCheck           = "err check"
 	ErrEncode          = "Encode"
 	ErrInternal        = "err internal"
+	UnknownReqId       = -1
 )

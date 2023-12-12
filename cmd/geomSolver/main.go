@@ -36,15 +36,26 @@ func runServer() {
 
 	startStructure := build.SetUp(logger.Log)
 
-	GeomSolvertApi := startStructure.GeomSolver
+	pointApi := startStructure.Point
+	lineApi := startStructure.Line
 	middlewareApi := startStructure.Middle
 
 	myRouter := router.New()
 	apiGroup := myRouter.Group("/api")
 	versionGroup := apiGroup.Group("/v1")
 	geomSolver := versionGroup.Group("/geomSolver")
+	lineSolver := geomSolver.Group("/line")
+	pointSolver := geomSolver.Group("/point")
 
-	geomSolver.POST("/", GeomSolvertApi.EqualTwoPointsHandler) //TODO(N): remake
+	pointSolver.POST("/equal/", pointApi.EqualTwoPointsHandler)
+	pointSolver.POST("/distance/", pointApi.DistanceBetweenTwoPointsHandler)
+	pointSolver.POST("/fixation/", pointApi.FixationPointHandler)
+	pointSolver.POST("/belongOfLine/", pointApi.BelongingPointOfLineHandler)
+	lineSolver.POST("/parallelism/", lineApi.ParallelismTwoLinesHandler)
+	lineSolver.POST("/perpendicular/", lineApi.PerpendicularTwoLinesHandler)
+	lineSolver.POST("/corner/", lineApi.CornerTwoLinesHandler)
+	lineSolver.POST("/vertical/", lineApi.VerticalLineHandler)
+	lineSolver.POST("/horizontal/", lineApi.HorizontalLineHandler)
 
 	addresHttp := ":" + configMain.Main.PortHttp
 
@@ -52,6 +63,6 @@ func runServer() {
 	errStart := fasthttp.ListenAndServe(addresHttp, middlewareApi.LogURL(myRouter.Handler))
 	if errStart != nil {
 		logger.Log.Errorf("Listen and server http error: %v", errStart)
-		os.Exit(9)
+		os.Exit(3)
 	}
 }
