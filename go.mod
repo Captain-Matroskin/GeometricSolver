@@ -3,6 +3,7 @@ module geometricSolver
 go 1.20
 
 require (
+	github.com/fasthttp/router v1.4.22
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.18.1
 	github.com/valyala/fasthttp v1.51.0
@@ -20,6 +21,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+	github.com/savsgio/gotils v0.0.0-20230208104028-c358bd845dee // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
