@@ -35,7 +35,6 @@ func runServer() {
 	configMain := configRes[0].(config.MainConfig)
 
 	startStructure := build.SetUp(logger.Log)
-
 	pointApi := startStructure.Point
 	lineApi := startStructure.Line
 	middlewareApi := startStructure.Middle

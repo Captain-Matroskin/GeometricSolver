@@ -36,6 +36,7 @@ func (l *LineApi) ParallelismTwoLinesHandler(ctx *fasthttp.RequestCtx) {
 		l.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
 
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (l *LineApi) PerpendicularTwoLinesHandler(ctx *fasthttp.RequestCtx) {
@@ -51,7 +52,7 @@ func (l *LineApi) PerpendicularTwoLinesHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		l.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (l *LineApi) CornerTwoLinesHandler(ctx *fasthttp.RequestCtx) {
@@ -67,7 +68,7 @@ func (l *LineApi) CornerTwoLinesHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		l.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (l *LineApi) VerticalLineHandler(ctx *fasthttp.RequestCtx) {
@@ -83,7 +84,7 @@ func (l *LineApi) VerticalLineHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		l.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (l *LineApi) HorizontalLineHandler(ctx *fasthttp.RequestCtx) {
@@ -99,5 +100,5 @@ func (l *LineApi) HorizontalLineHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		l.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }

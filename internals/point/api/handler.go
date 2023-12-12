@@ -34,7 +34,7 @@ func (p *PointApi) EqualTwoPointsHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		p.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (p *PointApi) DistanceBetweenTwoPointsHandler(ctx *fasthttp.RequestCtx) {
@@ -50,7 +50,7 @@ func (p *PointApi) DistanceBetweenTwoPointsHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		p.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (p *PointApi) FixationPointHandler(ctx *fasthttp.RequestCtx) {
@@ -66,7 +66,7 @@ func (p *PointApi) FixationPointHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		p.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
 
 func (p *PointApi) BelongingPointOfLineHandler(ctx *fasthttp.RequestCtx) {
@@ -82,5 +82,5 @@ func (p *PointApi) BelongingPointOfLineHandler(ctx *fasthttp.RequestCtx) {
 	} else {
 		p.CheckErrors.SetRequestIdUser(errPkg.UnknownReqId)
 	}
-
+	ctx.Response.SetStatusCode(http.StatusNotImplemented) //TODO(N): remake
 }
