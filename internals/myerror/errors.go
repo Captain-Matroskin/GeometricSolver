@@ -1,5 +1,9 @@
 package myerror
 
+import (
+	"errors"
+)
+
 type MultiLoggerInterface interface {
 	Debugf(template string, args ...interface{})
 	Infof(template string, args ...interface{})
@@ -12,6 +16,18 @@ type MyErrors struct {
 	SourceText      string
 	ProjectTypeText string
 	Way             string
+}
+
+func ConvertErrorToMyErrors(err error) (error, *MyErrors) {
+	var myErrors *MyErrors
+	switch {
+	case errors.As(err, &myErrors):
+		return nil, myErrors
+	default:
+		return &MyErrors{
+			ProjectTypeText: ErrNotMyErrors,
+		}, nil
+	}
 }
 
 func (e *MyErrors) Error() string {
@@ -29,10 +45,12 @@ const (
 	ErrAtoi            = "func Atoi convert string in int"
 	IntNil             = 0
 	ErrNotStringAndInt = "expected type string or int"
+	ErrNotMyErrors     = "expected type MyErrors"
 	ErrUnmarshal       = "unmarshal json"
 	ErrMarshal         = "marshaling in json"
 	ErrCheck           = "err check"
 	ErrEncode          = "Encode"
 	ErrInternal        = "err internal"
 	UnknownReqId       = -1
+	UnknowTypeError    = "an unexpected type of error. Not equal MyErrors"
 )

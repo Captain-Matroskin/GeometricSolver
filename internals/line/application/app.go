@@ -1,32 +1,34 @@
 package application
 
+import "geometricSolver/internals/util"
+
 type LineAppInterface interface {
-	ParallelismTwoLinesApp()
-	PerpendicularTwoLinesApp()
-	CornerTwoLinesApp()
-	VerticalLineApp()
-	HorizontalLineApp()
+	ParallelismTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error)
+	PerpendicularTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error)
+	CornerTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error)
+	VerticalLineApp(body util.BodyHTTP) (util.BodyHTTP, error)
+	HorizontalLineApp(body util.BodyHTTP) (util.BodyHTTP, error)
 }
 
 type LineApp struct {
 }
 
-func (l *LineApp) ParallelismTwoLinesApp() {
-
+func (l *LineApp) ParallelismTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
+	return util.BodyHTTP{}, nil
 }
 
-func (l *LineApp) PerpendicularTwoLinesApp() {
-
+func (l *LineApp) PerpendicularTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
+	return util.BodyHTTP{}, nil
 }
 
-func (l *LineApp) CornerTwoLinesApp() {
-
+func (l *LineApp) CornerTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
+	return util.BodyHTTP{}, nil
 }
 
-func (l *LineApp) VerticalLineApp() {
-
+func (l *LineApp) VerticalLineApp(body util.BodyHTTP) (util.BodyHTTP, error) {
+	return util.BodyHTTP{}, nil
 }
 
-func (l *LineApp) HorizontalLineApp() {
-
+func (l *LineApp) HorizontalLineApp(body util.BodyHTTP) (util.BodyHTTP, error) {
+	return util.BodyHTTP{}, nil
 }
