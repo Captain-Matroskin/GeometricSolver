@@ -1,0 +1,17 @@
+services:
+  geomsolver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: geomSolver
+    logging:
+      driver: syslog
+      options:
+        tag: foo-logs
+    ports:
+      - "5001:5001"
+      - "40001:40001"
+    networks:
+      - default
+    volumes:
+      - ./config/source:/app/config/source
