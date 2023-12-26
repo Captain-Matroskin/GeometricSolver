@@ -5,6 +5,7 @@ import (
 	"geometricSolver/config"
 	errPkg "geometricSolver/internals/myerror"
 	"geometricSolver/internals/util"
+	cors "github.com/AdhityaRamadhanus/fasthttpcors"
 	"github.com/fasthttp/router"
 	"github.com/valyala/fasthttp"
 	"go.uber.org/zap"
@@ -56,10 +57,21 @@ func runServer() {
 	lineSolver.POST("/vertical/", lineApi.VerticalLineHandler)
 	lineSolver.POST("/horizontal/", lineApi.HorizontalLineHandler)
 
+	withCors := cors.NewCorsHandler(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedHeaders: []string{"access-control-allow-origin", "content-type",
+			"x-csrf-token", "access-control-expose-headers"},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT"},
+		ExposedHeaders:   []string{"X-Csrf-Token"},
+		AllowCredentials: true,
+		AllowMaxAge:      5600,
+		Debug:            true,
+	})
+
 	addresHttp := ":" + configMain.Main.PortHttp
 
 	logger.Log.Infof("Listen in 127:0.0.1%s", addresHttp)
-	errStart := fasthttp.ListenAndServe(addresHttp, middlewareApi.LogURL(myRouter.Handler))
+	errStart := fasthttp.ListenAndServe(addresHttp, withCors.CorsMiddleware(middlewareApi.LogURL(myRouter.Handler)))
 	if errStart != nil {
 		logger.Log.Errorf("Listen and server http error: %v", errStart)
 		os.Exit(3)

@@ -3,6 +3,7 @@ module geometricSolver
 go 1.20
 
 require (
+	github.com/AdhityaRamadhanus/fasthttpcors v0.0.0-20170121111917-d4c07198763a
 	github.com/fasthttp/router v1.4.22
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.18.1
