@@ -344,7 +344,7 @@ func newtonMethod(body util.BodyHTTP) (util.BodyHTTP, error) {
 		y1 := body.Points[value.Points.First].Y
 		x2 := body.Points[value.Points.Second].X
 		y2 := body.Points[value.Points.Second].Y
-		d := value.Distance
+		d := value.Value
 		d0 := math.Sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))
 		delta := d*d - d0*d0
 		b.SetVec(2*nEqual+2*nFix+i, -delta)

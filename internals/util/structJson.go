@@ -25,6 +25,6 @@ type PairNumber struct {
 }
 
 type DistancePoints struct {
-	Distance float64
-	Points   PairNumber
+	Value  float64
+	Points PairNumber
 }

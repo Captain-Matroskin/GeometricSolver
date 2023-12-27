@@ -71,10 +71,7 @@ func (l *LineApi) ParallelismTwoLinesHandler(ctx *fasthttp.RequestCtx) {
 	//
 	//responseBody.HorizontLine = append(responseBody.HorizontLine, 0)
 
-	request, errResponse := json.Marshal(&util.Result{
-		Status: http.StatusCreated,
-		Body:   responseBody,
-	})
+	request, errResponse := json.Marshal(&responseBody)
 	if errResponse != nil {
 		ctx.Response.SetStatusCode(http.StatusInternalServerError)
 		ctx.Response.SetBody([]byte(errPkg.ErrEncode))
