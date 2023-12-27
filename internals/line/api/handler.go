@@ -61,20 +61,17 @@ func (l *LineApi) ParallelismTwoLinesHandler(ctx *fasthttp.RequestCtx) {
 		}
 	}
 
-	responseBody.Points = append(responseBody.Points, util.Point{X: 5.6, Y: 6.9})
-	responseBody.Points = append(responseBody.Points, util.Point{X: 9.6, Y: 6.9})
-	responseBody.Points = append(responseBody.Points, util.Point{X: 5.6, Y: 13.9})
-	responseBody.Points = append(responseBody.Points, util.Point{X: 9.6, Y: 18.9})
+	//responseBody.Points = append(responseBody.Points, util.Point{X: 5.6, Y: 6.9})
+	//responseBody.Points = append(responseBody.Points, util.Point{X: 9.6, Y: 6.9})
+	//responseBody.Points = append(responseBody.Points, util.Point{X: 5.6, Y: 13.9})
+	//responseBody.Points = append(responseBody.Points, util.Point{X: 9.6, Y: 18.9})
+	//
+	//responseBody.Lines = append(responseBody.Lines, util.PairNumber{First: 0, Second: 1})
+	//responseBody.Lines = append(responseBody.Lines, util.PairNumber{First: 2, Second: 3})
+	//
+	//responseBody.HorizontLine = append(responseBody.HorizontLine, 0)
 
-	responseBody.Lines = append(responseBody.Lines, util.PairNumber{First: 0, Second: 1})
-	responseBody.Lines = append(responseBody.Lines, util.PairNumber{First: 2, Second: 3})
-
-	responseBody.HorizontLine = append(responseBody.HorizontLine, 0)
-
-	request, errResponse := json.Marshal(&util.Result{
-		Status: http.StatusCreated,
-		Body:   responseBody,
-	})
+	request, errResponse := json.Marshal(&responseBody)
 	if errResponse != nil {
 		ctx.Response.SetStatusCode(http.StatusInternalServerError)
 		ctx.Response.SetBody([]byte(errPkg.ErrEncode))
