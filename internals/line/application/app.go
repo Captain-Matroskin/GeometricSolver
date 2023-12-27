@@ -1,6 +1,9 @@
 package application
 
-import "geometricSolver/internals/util"
+import (
+	"fmt"
+	"geometricSolver/internals/util"
+)
 
 type LineAppInterface interface {
 	ParallelismTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error)
@@ -14,21 +17,42 @@ type LineApp struct {
 }
 
 func (l *LineApp) ParallelismTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
-	return util.BodyHTTP{}, nil
+	body2, err := newtonMethod(body)
+	if err != nil {
+		fmt.Println("Error\n")
+		return body, err
+	}
+	return body2, nil
 }
 
 func (l *LineApp) PerpendicularTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
-	return util.BodyHTTP{}, nil
+	body, err := newtonMethod(body)
+	if err != nil {
+		fmt.Println("Error\n")
+	}
+	return body, nil
 }
 
 func (l *LineApp) CornerTwoLinesApp(body util.BodyHTTP) (util.BodyHTTP, error) {
-	return util.BodyHTTP{}, nil
+	body, err := newtonMethod(body)
+	if err != nil {
+		fmt.Println("Error\n")
+	}
+	return body, nil
 }
 
 func (l *LineApp) VerticalLineApp(body util.BodyHTTP) (util.BodyHTTP, error) {
-	return util.BodyHTTP{}, nil
+	body, err := newtonMethod(body)
+	if err != nil {
+		fmt.Println("Error\n")
+	}
+	return body, nil
 }
 
 func (l *LineApp) HorizontalLineApp(body util.BodyHTTP) (util.BodyHTTP, error) {
-	return util.BodyHTTP{}, nil
+	body, err := newtonMethod(body)
+	if err != nil {
+		fmt.Println("Error\n")
+	}
+	return body, nil
 }
