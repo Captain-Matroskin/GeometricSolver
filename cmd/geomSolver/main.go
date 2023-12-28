@@ -43,9 +43,8 @@ func runServer() {
 	apiGroup := myRouter.Group("/api")
 	versionGroup := apiGroup.Group("/v1")
 	geomSolver := versionGroup.Group("/geomSolver")
-	lineSolver := geomSolver.Group("/line")
 
-	lineSolver.POST("/parallelism/", lineApi.GeomSolverHandler)
+	geomSolver.POST("/", lineApi.GeomSolverHandler)
 
 	withCors := cors.NewCorsHandler(cors.Options{
 		AllowedOrigins: []string{"*"},

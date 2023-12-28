@@ -2,10 +2,10 @@ package build
 
 import (
 	"geometricSolver/config"
-	apiLine "geometricSolver/internals/line/api"
-	appLine "geometricSolver/internals/line/application"
 	apiMiddle "geometricSolver/internals/middleware/api"
 	errPkg "geometricSolver/internals/myerror"
+	apiLine "geometricSolver/internals/solver/api"
+	appLine "geometricSolver/internals/solver/application"
 	"github.com/spf13/viper"
 )
 

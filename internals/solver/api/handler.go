@@ -2,8 +2,8 @@ package api
 
 import (
 	"encoding/json"
-	"geometricSolver/internals/line/application"
 	errPkg "geometricSolver/internals/myerror"
+	"geometricSolver/internals/solver/application"
 	"geometricSolver/internals/util"
 	"github.com/valyala/fasthttp"
 	"net/http"
