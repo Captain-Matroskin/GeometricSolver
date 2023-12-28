@@ -2,6 +2,7 @@ package application
 
 import (
 	"fmt"
+	errPkg "geometricSolver/internals/myerror"
 	"geometricSolver/internals/util"
 	"gonum.org/v1/gonum/diff/fd"
 	"gonum.org/v1/gonum/mat"
@@ -33,7 +34,6 @@ func solver(body util.BodyHTTP) (util.BodyHTTP, error) {
 }
 
 func f_jac_creater(body util.BodyHTTP) func(y, x []float64) {
-
 	nEqual := len(body.EqualTwoPoints)
 	nFix := len(body.FixationPoint)
 	nDist := len(body.DistanceBetweenPoints)
@@ -427,11 +427,11 @@ func newtonMethod(body util.BodyHTTP) (util.BodyHTTP, error) {
 		}
 
 		// Решите систему линейных уравнений J * dx = -f для приращения dx.
-		dx, err := solveLinearSystem(jac, f)
+		dx, errSolver := solveLinearSystem(jac, f)
 		//fmt.Println("dx: ", dx)
-		if err != nil {
+		if errSolver != nil {
 			fmt.Printf("Error aftor solve")
-			return body, err
+			return body, errSolver
 		}
 
 		// Обновите текущее приближение x.
@@ -441,7 +441,7 @@ func newtonMethod(body util.BodyHTTP) (util.BodyHTTP, error) {
 		}
 		fmt.Println("x: ", x)
 	}
-	return body, fmt.Errorf("не удалось найти решение")
+	return body, &errPkg.MyErrors{ProjectTypeText: errPkg.NotFoundSolver, SourceText: errPkg.NotFoundSolver, Way: "newtonMethod"}
 }
 
 func solveLinearSystem(A *mat.Dense, b *mat.VecDense) (*mat.VecDense, error) {
@@ -453,9 +453,9 @@ func solveLinearSystem(A *mat.Dense, b *mat.VecDense) (*mat.VecDense, error) {
 	}
 	fmt.Printf("\nb: ", b)
 	var x mat.VecDense
-	err := x.SolveVec(A, b)
-	if err != nil {
-		return nil, err
+	errSolver := x.SolveVec(A, b)
+	if errSolver != nil {
+		return nil, &errPkg.MyErrors{ProjectTypeText: errPkg.NotFoundSolver, SourceText: errSolver.Error(), Way: "solveLinearSystem"}
 	}
 	return &x, nil
 }

@@ -53,4 +53,6 @@ const (
 	ErrInternal        = "err internal"
 	UnknownReqId       = -1
 	UnknowTypeError    = "an unexpected type of error. Not equal MyErrors"
+	AfterSolver        = "Error after solver"
+	NotFoundSolver     = "Не удалось найти решение"
 )
