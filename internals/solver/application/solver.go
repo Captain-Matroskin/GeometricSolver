@@ -150,7 +150,7 @@ func b_creater(body util.BodyHTTP, x []float64) *mat.VecDense {
 	for i, value := range body.CornerTwoLines {
 		num_line1 := value.First
 		num_line2 := value.Second
-		//corner := value.
+		corner := float64(value.Value)
 		line1_first_point := body.Lines[num_line1].First
 		line1_second_point := body.Lines[num_line1].Second
 		line2_first_point := body.Lines[num_line2].First
@@ -172,7 +172,16 @@ func b_creater(body util.BodyHTTP, x []float64) *mat.VecDense {
 		dl_x4 := x[size_constraint+2*body.Lines[num_line2].Second]
 		dl_y4 := x[size_constraint+2*body.Lines[num_line2].Second+1]
 
-		b.SetVec(2*nEqual+2*nFix+nDist+nBelong+nParall+nPerpen+i, (x2+dl_x2-x1-dl_x1)*(x4+dl_x4-x3-dl_x3)+(y2+dl_y2-y1-dl_y1)*(y4+dl_y4-y3-dl_y3))
+		distance_l1 := math.Sqrt(math.Abs(x1+dl_x1-x2-dl_x2)*math.Abs(x1+dl_x1-x2-dl_x2) +
+			math.Abs(y1+dl_y1-y2-dl_y2)*math.Abs(y1+dl_y1-y2-dl_y2))
+		fmt.Printf("l1: %f\n", distance_l1)
+		distance_l2 := math.Sqrt(math.Abs(x3+dl_x3-x4-dl_x4)*math.Abs(x3+dl_x3-x4-dl_x4) +
+			math.Abs(y3+dl_y3-y4-dl_y4)*math.Abs(y3+dl_y3-y4-dl_y4))
+		fmt.Printf("l2: %f\n", distance_l2)
+		//fmt.Printf("current corner: %f\n", l1)
+		b.SetVec(2*nEqual+2*nFix+nDist+nBelong+nParall+nPerpen+i,
+			((x2+dl_x2-x1-dl_x1)*(x4+dl_x4-x3-dl_x3)+(y2+dl_y2-y1-dl_y1)*(y4+dl_y4-y3-dl_y3))/(distance_l1*distance_l2)-
+				math.Cos(corner*0.0175))
 	}
 
 	for i, value := range body.VerticalLine {
@@ -408,15 +417,21 @@ func f_jac_creater(body util.BodyHTTP) func(y, x []float64) {
 			dl_y4 := x[size_constraint+2*body.Lines[num_line2].Second+1]
 			l1 := x[2*nEqual+2*nFix+nDist+nBelong+nParall+nPerpen+i]
 
-			y[2*nEqual+2*nFix+nDist+nBelong+nParall+nPerpen+i] += (x2+dl_x2-x1-dl_x1)*(x4+dl_x4-x3-dl_x3) + (y2+dl_y2-y1-dl_y1)*(y4+dl_y4-y3-dl_y3)
-			y[size_constraint+2*body.Lines[num_line1].First] += +l1 * (-1.0 * (x4 + dl_x4 - x3 - dl_x3))
-			y[size_constraint+2*body.Lines[num_line1].First+1] += +l1 * (-1.0 * (y4 + dl_y4 - y3 - dl_y3))
-			y[size_constraint+2*body.Lines[num_line1].Second] += +l1 * (x4 + dl_x4 - x3 - dl_x3)
-			y[size_constraint+2*body.Lines[num_line1].Second+1] += +l1 * (y4 + dl_y4 - y3 - dl_y3)
-			y[size_constraint+2*body.Lines[num_line2].First] += +l1 * (-1.0 * (x2 + dl_x2 - x1 - dl_x1))
-			y[size_constraint+2*body.Lines[num_line2].First+1] += +l1 * (-1.0 * (y2 + dl_y2 - y1 - dl_y1))
-			y[size_constraint+2*body.Lines[num_line2].Second] += +l1 * (x2 + dl_x2 - x1 - dl_x1)
-			y[size_constraint+2*body.Lines[num_line2].Second+1] += +l1 * (y2 + dl_y2 - y1 - dl_y1)
+			distance_l1 := math.Sqrt(math.Abs(x1+dl_x1-x2-dl_x2)*math.Abs(x1+dl_x1-x2-dl_x2) +
+				math.Abs(y1+dl_y1-y2-dl_y2)*math.Abs(y1+dl_y1-y2-dl_y2))
+			fmt.Printf("l1: %f\n", l1)
+			distance_l2 := math.Sqrt(math.Abs(x3+dl_x3-x4-dl_x4)*math.Abs(x3+dl_x3-x4-dl_x4) +
+				math.Abs(y3+dl_y3-y4-dl_y4)*math.Abs(y3+dl_y3-y4-dl_y4))
+
+			y[2*nEqual+2*nFix+nDist+nBelong+nParall+nPerpen+i] += ((x2+dl_x2-x1-dl_x1)*(x4+dl_x4-x3-dl_x3) + (y2+dl_y2-y1-dl_y1)*(y4+dl_y4-y3-dl_y3)) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line1].First] += (+l1 * (-1.0 * (x4 + dl_x4 - x3 - dl_x3))) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line1].First+1] += (+l1 * (-1.0 * (y4 + dl_y4 - y3 - dl_y3))) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line1].Second] += (+l1 * (x4 + dl_x4 - x3 - dl_x3)) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line1].Second+1] += (+l1 * (y4 + dl_y4 - y3 - dl_y3)) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line2].First] += (+l1 * (-1.0 * (x2 + dl_x2 - x1 - dl_x1))) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line2].First+1] += (+l1 * (-1.0 * (y2 + dl_y2 - y1 - dl_y1))) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line2].Second] += (+l1 * (x2 + dl_x2 - x1 - dl_x1)) / (distance_l1 * distance_l2)
+			y[size_constraint+2*body.Lines[num_line2].Second+1] += (+l1 * (y2 + dl_y2 - y1 - dl_y1)) / (distance_l1 * distance_l2)
 		}
 
 		for i, value := range body.VerticalLine {
@@ -523,7 +538,7 @@ func newtonMethod(body util.BodyHTTP) (util.BodyHTTP, error) {
 			x.SetVec(i, x.AtVec(i)+dx.AtVec(i))
 			x_st[i] = x_st[i] + dx.AtVec(i)
 		}
-		//fmt.Println("x: ", x)
+		fmt.Println("x: ", x)
 	}
 	return body, &errPkg.MyErrors{ProjectTypeText: errPkg.NotFoundSolver, SourceText: errPkg.NotFoundSolver, Way: "newtonMethod"}
 }
@@ -535,7 +550,7 @@ func solveLinearSystem(A *mat.Dense, b *mat.VecDense) (*mat.VecDense, error) {
 	//	}
 	//	fmt.Printf("\n")
 	//}
-	//fmt.Printf("\nb: ", b)
+	fmt.Printf("\nb: ", b)
 	var x mat.VecDense
 	errSolver := x.SolveVec(A, b)
 	if errSolver != nil {
