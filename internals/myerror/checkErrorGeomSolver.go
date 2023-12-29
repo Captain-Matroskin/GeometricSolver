@@ -7,7 +7,7 @@ import (
 
 type CheckErrorInterface interface {
 	SetRequestIdUser(reqId int)
-	CheckErrorParallelismTwoLines(inErr error) (error, []byte, int)
+	CheckErrorGeomSolver(inErr error) (error, []byte, int)
 }
 
 type CheckError struct {
@@ -19,7 +19,7 @@ func (c *CheckError) SetRequestIdUser(reqId int) {
 	c.RequestId = reqId
 }
 
-func (c *CheckError) CheckErrorParallelismTwoLines(inErr error) (error, []byte, int) {
+func (c *CheckError) CheckErrorGeomSolver(inErr error) (error, []byte, int) {
 	if inErr != nil {
 		errConvert, myError := ConvertErrorToMyErrors(inErr)
 		if errConvert != nil {
@@ -45,7 +45,25 @@ func (c *CheckError) CheckErrorParallelismTwoLines(inErr error) (error, []byte, 
 		}
 
 		switch myError.ProjectTypeText {
-
+		case NotFoundSolver:
+			result, errMarshal := json.Marshal(ResultError{
+				Status:  http.StatusConflict,
+				Explain: ErrDB,
+			})
+			if errMarshal != nil {
+				c.Logger.Errorf("%s, %v, requestId: %d", ErrMarshal, errMarshal, c.RequestId)
+				return &MyErrors{
+						ProjectTypeText: ErrMarshal,
+						SourceText:      errMarshal.Error(),
+					},
+					nil, http.StatusInternalServerError
+			}
+			c.Logger.Warnf("Type: %s, source: %s, requestId: %d", myError.ProjectTypeText, myError.SourceText, c.RequestId)
+			return &MyErrors{
+					ProjectTypeText: ErrCheck,
+					SourceText:      myError.ProjectTypeText,
+				},
+				result, http.StatusConflict
 		default:
 			result, errMarshal := json.Marshal(ResultError{
 				Status:  http.StatusInternalServerError,

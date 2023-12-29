@@ -16,7 +16,7 @@ docker-compose -f docker-compose.yml up -d --build
 curl --header "Content-Type: application/json" \
 --request POST \
 --data '{$FullJson$}' \
-127.0.0.1:5001/api/v1/geomSolver/line/parallelism/
+127.0.0.1:5001/api/v1/geomSolver/
 ```
 где вместо *$FullJson$* вставить полный json, выше показано как пример
 

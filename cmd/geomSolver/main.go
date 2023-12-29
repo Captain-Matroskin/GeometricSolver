@@ -36,7 +36,6 @@ func runServer() {
 	configMain := configRes[0].(config.MainConfig)
 
 	startStructure := build.SetUp(logger.Log)
-	pointApi := startStructure.Point
 	lineApi := startStructure.Line
 	middlewareApi := startStructure.Middle
 
@@ -44,18 +43,8 @@ func runServer() {
 	apiGroup := myRouter.Group("/api")
 	versionGroup := apiGroup.Group("/v1")
 	geomSolver := versionGroup.Group("/geomSolver")
-	lineSolver := geomSolver.Group("/line")
-	pointSolver := geomSolver.Group("/point")
 
-	pointSolver.POST("/equal/", pointApi.EqualTwoPointsHandler)
-	pointSolver.POST("/distance/", pointApi.DistanceBetweenTwoPointsHandler)
-	pointSolver.POST("/fixation/", pointApi.FixationPointHandler)
-	pointSolver.POST("/belongOfLine/", pointApi.BelongingPointOfLineHandler)
-	lineSolver.POST("/parallelism/", lineApi.ParallelismTwoLinesHandler)
-	lineSolver.POST("/perpendicular/", lineApi.PerpendicularTwoLinesHandler)
-	lineSolver.POST("/corner/", lineApi.CornerTwoLinesHandler)
-	lineSolver.POST("/vertical/", lineApi.VerticalLineHandler)
-	lineSolver.POST("/horizontal/", lineApi.HorizontalLineHandler)
+	geomSolver.POST("/", lineApi.GeomSolverHandler)
 
 	withCors := cors.NewCorsHandler(cors.Options{
 		AllowedOrigins: []string{"*"},
