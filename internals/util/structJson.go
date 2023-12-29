@@ -25,6 +25,7 @@ type PairNumber struct {
 }
 
 type DistancePoints struct {
-	Value  float64    `json:"value"`
-	Points PairNumber `json:"points"`
+	Value  float64 `json:"value"`
+	First  int     `json:"first"`
+	Second int     `json:"second"`
 }

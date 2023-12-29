@@ -59,8 +59,8 @@ func b_creater(body util.BodyHTTP, x []float64) *mat.VecDense {
 	}
 
 	for i, value := range body.DistanceBetweenPoints {
-		first := value.Points.First
-		second := value.Points.Second
+		first := value.First
+		second := value.Second
 		d := value.Value
 		x1 := body.Points[first].X
 		y1 := body.Points[first].Y
@@ -265,8 +265,8 @@ func f_jac_creater(body util.BodyHTTP) func(y, x []float64) {
 		}
 
 		for i, value := range body.DistanceBetweenPoints {
-			first := value.Points.First
-			second := value.Points.Second
+			first := value.First
+			second := value.Second
 			d := value.Value
 			x1 := body.Points[first].X
 			y1 := body.Points[first].Y
