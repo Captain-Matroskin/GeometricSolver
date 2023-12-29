@@ -2,6 +2,7 @@ package application
 
 import (
 	"fmt"
+	errPkg "geometricSolver/internals/myerror"
 	"geometricSolver/internals/util"
 	"gonum.org/v1/gonum/diff/fd"
 	"gonum.org/v1/gonum/mat"
@@ -524,7 +525,7 @@ func newtonMethod(body util.BodyHTTP) (util.BodyHTTP, error) {
 		}
 		//fmt.Println("x: ", x)
 	}
-	return body, fmt.Errorf("не удалось найти решение")
+	return body, &errPkg.MyErrors{ProjectTypeText: errPkg.NotFoundSolver, SourceText: errPkg.NotFoundSolver, Way: "newtonMethod"}
 }
 
 func solveLinearSystem(A *mat.Dense, b *mat.VecDense) (*mat.VecDense, error) {
@@ -536,9 +537,9 @@ func solveLinearSystem(A *mat.Dense, b *mat.VecDense) (*mat.VecDense, error) {
 	//}
 	//fmt.Printf("\nb: ", b)
 	var x mat.VecDense
-	err := x.SolveVec(A, b)
-	if err != nil {
-		return nil, err
+	errSolver := x.SolveVec(A, b)
+	if errSolver != nil {
+		return nil, &errPkg.MyErrors{ProjectTypeText: errPkg.NotFoundSolver, SourceText: errSolver.Error(), Way: "solveLinearSystem"}
 	}
 	return &x, nil
 }

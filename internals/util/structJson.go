@@ -5,26 +5,26 @@ type BodyHTTP struct { //TODO(N): remake
 	Lines                 []PairNumber     `json:"lines"`                 // Номера точек
 	EqualTwoPoints        []PairNumber     `json:"equalTwoPoints"`        // Номера точек
 	DistanceBetweenPoints []DistancePoints `json:"distanceBetweenPoints"` // Номера точек
-	FixationPoint         []int            // Массив из номеров точек, которые зафиксированы
-	BelongOfLine          []PairNumber     // Первый - номер точки, второй - номер линии
-	ParallelTwoLines      []PairNumber     `json:"parallelTwoLines"` // Номера линий
-	PerpenTwoLines        []PairNumber     // Номера линий
-	CornerTwoLines        []PairNumber     // Номера линий
-	VerticalLine          []int            // Массив из номеров линий
-	HorizontLine          []int            // Массив из номеров линий
+	FixationPoint         []int            `json:"fixationPoint"`         // Массив из номеров точек, которые зафиксированы
+	BelongOfLine          []PairNumber     `json:"belongOfLine"`          // Первый - номер точки, второй - номер линии
+	ParallelTwoLines      []PairNumber     `json:"parallelTwoLines"`      // Номера линий
+	PerpenTwoLines        []PairNumber     `json:"perpenTwoLines"`        // Номера линий
+	CornerTwoLines        []PairNumber     `json:"cornerTwoLines"`        // Номера линий
+	VerticalLine          []int            `json:"verticalLine"`          // Массив из номеров линий
+	HorizontLine          []int            `json:"horizontLine"`          // Массив из номеров линий
 }
 
 type Point struct {
-	X float64
-	Y float64
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
 }
 
 type PairNumber struct {
-	First  int
-	Second int
+	First  int `json:"first"`
+	Second int `json:"second"`
 }
 
 type DistancePoints struct {
-	Value  float64
-	Points PairNumber
+	Value  float64    `json:"value"`
+	Points PairNumber `json:"points"`
 }
